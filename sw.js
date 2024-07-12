@@ -11,4 +11,9 @@ self.addEventListener("activate", (e) => {
 // fetch event
 self.addEventListener("fetch", (e) => {
   console.log("[Service Worker] fetched resource " + e.request.url);
+  e.respondWith(
+    caches.match(e.request).then(function (response) {
+      return response || fetch(e.request);
+    })
+  );
 });
